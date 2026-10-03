@@ -1,0 +1,11 @@
+window.addEventListener("load",()=>setTimeout(()=>document.getElementById("loader").classList.add("done"),700));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(x=>io.observe(x));
+const menu=document.getElementById("menu"),mobile=document.getElementById("mobileNav");
+menu?.addEventListener("click",()=>mobile.classList.toggle("open"));
+mobile?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>mobile.classList.remove("open")));
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener("click",e=>{const el=document.querySelector(a.getAttribute("href"));if(el){e.preventDefault();el.scrollIntoView({behavior:"smooth"})}}));
+const cursor=document.getElementById("cursor");
+window.addEventListener("pointermove",e=>{cursor.style.left=e.clientX+"px";cursor.style.top=e.clientY+"px"});
+const form=document.getElementById("bookingForm");
+form?.addEventListener("submit",e=>{e.preventDefault();const d=new FormData(form);const msg=`Hi LUMÉ, I'd like to request an appointment.%0A%0AName: ${d.get("name")}%0AService: ${d.get("service")}%0APreferred date: ${d.get("date")}%0AMessage: ${d.get("message")||"—"}`;window.open("https://wa.me/94771234567?text="+msg,"_blank");form.innerHTML='<div class="sent">Your WhatsApp request is ready ✦<br><br>Replace the demo number with the salon\'s real WhatsApp before launch.</div>'});
